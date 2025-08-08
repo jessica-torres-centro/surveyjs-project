@@ -3,15 +3,22 @@ import { useState } from "react";
 import { SurveyCreator } from "survey-creator-react";
 //this is to render the Survey Creator
 import { SurveyCreatorComponent } from "survey-creator-react";
+import SurveyTheme from "survey-core/themes";
+import { registerSurveyTheme } from "survey-creator-core";
+
+
 //survey Creator and Form Library styling sheets
 import "survey-core/survey-core.css";
 import "survey-creator-core/survey-creator-core.css";
 
 import { ICreatorOptions } from "survey-creator-core";
 
+registerSurveyTheme(SurveyTheme);
+
 const defaultCreatorOptions: ICreatorOptions = {
   autoSaveEnabled: true,
-  collapseOnDrag: true
+  collapseOnDrag: true,
+  showThemeTab: true
 };
 //default JSON that appears if no localstorage JSON data is found or when SurveyCreator is launched for the first time
 const defaultJson = {
