@@ -8,6 +8,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
+        {/*Can send JSON data and ICreatorOptions to render another widget! */}
         <Route path="/" element={<SurveyCreatorWidget/>}></Route>
         <Route path="/survey" element={<SurveyComponent/>}></Route>
       </Routes>

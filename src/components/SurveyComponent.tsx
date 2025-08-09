@@ -6,6 +6,8 @@ import 'survey-core/survey-core.css';
 import {Model} from 'survey-core';
 import {Survey} from 'survey-react-ui'
 
+import CustomTheme from "./CustomTheme";
+
 //need to import JSON saved in localstorage
 const defaultJson = {
     elements: [{
@@ -24,7 +26,7 @@ export default function SurveyComponent(){
     const contentToRender = window.localStorage.getItem("survey-json") || JSON.stringify(defaultJson);
     //Model is a constructor and you're creating an instance of Model and naming it survey
     const survey = new Model(contentToRender);
-
-
+    //add theme to survey
+    survey.applyTheme(CustomTheme);
     return <Survey model={survey}/>;
 }
