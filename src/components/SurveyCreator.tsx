@@ -1,11 +1,12 @@
 // components/SurveyCreator.tsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SurveyCreator } from "survey-creator-react";
 //this is to render the Survey Creator
 import { SurveyCreatorComponent } from "survey-creator-react";
 import SurveyTheme from "survey-core/themes";
 import { registerSurveyTheme } from "survey-creator-core";
 
+import CustomTheme from "./CustomTheme";
 
 //survey Creator and Form Library styling sheets
 import "survey-core/survey-core.css";
@@ -43,9 +44,10 @@ export default function SurveyCreatorWidget(props: { json?: Object, options?: IC
     //if no creator, make one from SurveyCreator and set it to creator
     if (!creator) {
       creator = new SurveyCreator(props.options || defaultCreatorOptions);
+      creator.applyTheme(CustomTheme);
       setCreator(creator);
     }
-  
+
     //to grab existing JSON data
     creator.text = JSON.stringify(props.json) || window.localStorage.getItem("survey-json") || JSON.stringify(defaultJson);
 
@@ -57,7 +59,28 @@ export default function SurveyCreatorWidget(props: { json?: Object, options?: IC
         callback(saveNo, true);
     
       };
-
+      
+      /*
+      const [creator] = useState(() => {
+        const c = new SurveyCreator(props.options || defaultCreatorOptions);
+        c.applyTheme(CustomTheme);
+        return c;
+      });
+    
+      // set survey JSON on mount or when props.json changes
+      useEffect(() => {
+        const initialJson = props.json ? JSON.stringify(props.json) : window.localStorage.getItem("survey-json") || JSON.stringify(defaultJson);
+        creator.text = initialJson;
+      }, [props.json, creator]);
+    
+      // attach save function once
+      useEffect(() => {
+        creator.saveSurveyFunc = (saveNo: number, callback: (num: number, status: boolean) => void) => {
+          window.localStorage.setItem("survey-json", creator.text);
+          callback(saveNo, true);
+        };
+      }, [creator]);
+      */
     return (
         <div style={{ height: "100vh", width: "100%" }}>
           <SurveyCreatorComponent creator={creator} />

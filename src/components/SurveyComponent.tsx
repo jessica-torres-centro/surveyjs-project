@@ -5,7 +5,6 @@ import 'survey-core/survey-core.css';
 
 import {Model} from 'survey-core';
 import {Survey} from 'survey-react-ui'
-import { LayeredDarkPanelless } from "survey-core/themes";
 
 import CustomTheme from "./CustomTheme";
 
