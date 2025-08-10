@@ -10,7 +10,8 @@ const CUSTOM_QUESTION_TYPE = "descriptivetext";
 class DescriptiveTextModel extends QuestionNonValue {
     constructor(name: string) {
         super(name);
-        // Create a `LocalizableString` object for the `caption` property
+        // Create a `LocalizableString` object for the text property
+        // Each localizablestring can hold multiple translations
         this.createLocalizableString("headerText", this);
         this.createLocalizableString("bodyText", this);
         
@@ -18,6 +19,7 @@ class DescriptiveTextModel extends QuestionNonValue {
     getType() {
         return CUSTOM_QUESTION_TYPE;
     }
+    // returns actual text for current language as a string
     get headerText() {
         return this.getLocalizableStringText("headerText");
     }
@@ -32,6 +34,7 @@ class DescriptiveTextModel extends QuestionNonValue {
     set bodyText(val) {
         this.setLocalizableStringText("bodyText", val);
     }
+    // stores size value in JSON and are registered in Serializer.addClass(...)
     get headerTextSize() {
         return this.getPropertyValue("headerTextSize") || "medium";
       }
@@ -45,12 +48,20 @@ class DescriptiveTextModel extends QuestionNonValue {
       set bodyTextSize(val) {
         this.setPropertyValue("bodyTextSize", val);
       }
+      // returns full localizablestring object that holds translations
       get locHeaderText() {
         return this.getLocalizableString("headerText");
       }
       get locBodyText() {
         return this.getLocalizableString("bodyText");
       }
+      get backgroundColor() {
+        return this.getPropertyValue("backgroundColor");
+      }
+      set backgroundColor(val) {
+        this.setPropertyValue("backgroundColor", val);
+      }
+      
 }
 
 // Register `DescriptiveTextModel` as a constructor for the "descriptivetext" question type
@@ -59,6 +70,7 @@ ElementFactory.Instance.registerElement(CUSTOM_QUESTION_TYPE, (name) => {
 });
 
 // Configure JSON serialization and deserialization rules for the custom properties
+// this is where you define options that display in the settings panel for the custom question
 Serializer.addClass(
     CUSTOM_QUESTION_TYPE,
     [
@@ -102,6 +114,13 @@ Serializer.addClass(
     "question"
 );
 
+Serializer.addProperty(CUSTOM_QUESTION_TYPE, {
+    name: "backgroundColor",
+    category: "general",
+    default: "transparent",  // or any default color you want
+    type: "color"        // this makes it show a color picker in the Survey Creator UI
+  });
+
 // Change a placeholder for the text property editor
 Serializer.findProperty(CUSTOM_QUESTION_TYPE, "headerText").placeholder = "Enter header text...";
 Serializer.findProperty(CUSTOM_QUESTION_TYPE, "bodyText").placeholder = "Enter body text...";
@@ -119,12 +138,13 @@ class SurveyQuestionDescriptiveText extends SurveyQuestionElementBase {
     renderElement() {
         const headerSize = this.question.headerTextSize || "medium";
         const bodySize = this.question.bodyTextSize || "medium";
+        const backgroundColor = this.question.backgroundColor || "transparent";
         
         const header = SurveyElementBase.renderLocString(this.question.locHeaderText);
         const body = SurveyElementBase.renderLocString(this.question.locBodyText);
-        console.log("headerSize:", headerSize, "bodySize:", bodySize);
+        console.log("headerSize:", headerSize, "bodySize:", bodySize, "backgroundColor:", backgroundColor);
         return (
-            <div className="descriptiveTextContainer" tabIndex={0} style={{ overflow: "hidden", display: "block" }}>
+            <div className="descriptiveTextContainer" tabIndex={0} style={{ overflow: "hidden", display: "block" , backgroundColor: backgroundColor, textAlign: 'left', padding: '2rem', borderRadius: '15px'}}>
                 <h2 className={`descriptiveTextHeader ${headerSize}`}>{header}</h2>
                 <p className={`descriptiveTextBody ${bodySize}`}>{body}</p>
             </div>
