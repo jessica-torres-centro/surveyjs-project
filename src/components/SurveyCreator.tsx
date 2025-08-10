@@ -7,6 +7,7 @@ import SurveyTheme from "survey-core/themes";
 import { registerSurveyTheme } from "survey-creator-core";
 
 import CustomTheme from "./CustomTheme";
+import "./customquestions/DescriptiveTextQuestion";
 
 //survey Creator and Form Library styling sheets
 import "survey-core/survey-core.css";
