@@ -1,0 +1,23 @@
+.descriptiveTextHeader.small {
+    font-size: 14px;
+  }
+  
+  .descriptiveTextHeader.medium {
+    font-size: 18px;
+  }
+  
+  .descriptiveTextHeader.large {
+    font-size: 24px;
+  }
+  
+  .descriptiveTextBody.small {
+    font-size: 12px;
+  }
+  
+  .descriptiveTextBody.medium {
+    font-size: 16px;
+  }
+  
+  .descriptiveTextBody.large {
+    font-size: 20px;
+  }

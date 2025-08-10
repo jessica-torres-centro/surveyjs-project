@@ -7,6 +7,7 @@ import {Model} from 'survey-core';
 import {Survey} from 'survey-react-ui'
 
 import CustomTheme from "./CustomTheme";
+import "./customquestions/DescriptiveTextQuestion";
 
 //need to import JSON saved in localstorage
 const defaultJson = {
