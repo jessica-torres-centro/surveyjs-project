@@ -5,13 +5,16 @@ import { SurveyCreator } from "survey-creator-react";
 import { SurveyCreatorComponent } from "survey-creator-react";
 import SurveyTheme from "survey-core/themes";
 import { registerSurveyTheme } from "survey-creator-core";
-
+//survey Creator and Form Library styling sheets
+import "./customquestions/contactinformation.css";
 import CustomTheme from "./CustomTheme";
+
+import "./customquestions/ContactInformationQuestion";
 import "./customquestions/DescriptiveTextQuestion";
 
-//survey Creator and Form Library styling sheets
 import "survey-core/survey-core.css";
 import "survey-creator-core/survey-creator-core.css";
+
 
 import { ICreatorOptions } from "survey-creator-core";
 
@@ -38,7 +41,34 @@ const defaultJson = {
     }]
   };
 
+  export default function SurveyCreatorWidget(props: { json?: Object; options?: ICreatorOptions }) {
+    const [creator] = useState(() => {
+      const cr = new SurveyCreator(props.options || defaultCreatorOptions);
+      cr.applyTheme(CustomTheme);
+      return cr;
+    });
+  
+    useEffect(() => {
+      creator.text =
+        JSON.stringify(props.json) || window.localStorage.getItem("survey-json") || JSON.stringify(defaultJson);
+    }, [props.json, creator]);
+  
+    creator.saveSurveyFunc = (saveNo: number, callback: (saveNo: number, success: boolean) => void) => {
+      window.localStorage.setItem("survey-json", creator.text);
+      callback(saveNo, true);
+    };
+  
+    return (
+      <div style={{ height: "100vh", width: "100%" }}>
+        <SurveyCreatorComponent creator={creator} />
+      </div>
+    );
+  }
+  
+
+
 //what will show the Survey Creator UI, takes in JSON data and the Creator UI Options
+/*
 export default function SurveyCreatorWidget(props: { json?: Object, options?: ICreatorOptions }) {
     //set creator state
     let [creator, setCreator] = useState<SurveyCreator>();
@@ -46,6 +76,13 @@ export default function SurveyCreatorWidget(props: { json?: Object, options?: IC
     if (!creator) {
       creator = new SurveyCreator(props.options || defaultCreatorOptions);
       creator.applyTheme(CustomTheme);
+
+      // Add toolbox category
+    creator.toolbox.defineCategories([{
+    category: "Custom Items",
+    items: ["contactinformation"]
+    }], true);
+
       setCreator(creator);
     }
 
@@ -61,30 +98,12 @@ export default function SurveyCreatorWidget(props: { json?: Object, options?: IC
     
       };
       
-      /*
-      const [creator] = useState(() => {
-        const c = new SurveyCreator(props.options || defaultCreatorOptions);
-        c.applyTheme(CustomTheme);
-        return c;
-      });
-    
-      // set survey JSON on mount or when props.json changes
-      useEffect(() => {
-        const initialJson = props.json ? JSON.stringify(props.json) : window.localStorage.getItem("survey-json") || JSON.stringify(defaultJson);
-        creator.text = initialJson;
-      }, [props.json, creator]);
-    
-      // attach save function once
-      useEffect(() => {
-        creator.saveSurveyFunc = (saveNo: number, callback: (num: number, status: boolean) => void) => {
-          window.localStorage.setItem("survey-json", creator.text);
-          callback(saveNo, true);
-        };
-      }, [creator]);
-      */
+      
     return (
         <div style={{ height: "100vh", width: "100%" }}>
           <SurveyCreatorComponent creator={creator} />
         </div>
       );
   }
+
+  */
