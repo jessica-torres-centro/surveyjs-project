@@ -142,7 +142,7 @@ class SurveyQuestionDescriptiveText extends SurveyQuestionElementBase {
         
         const header = SurveyElementBase.renderLocString(this.question.locHeaderText);
         const body = SurveyElementBase.renderLocString(this.question.locBodyText);
-        console.log("headerSize:", headerSize, "bodySize:", bodySize, "backgroundColor:", backgroundColor);
+        //console.log("headerSize:", headerSize, "bodySize:", bodySize, "backgroundColor:", backgroundColor);
         return (
             <div className="descriptiveTextContainer" tabIndex={0} style={{ overflow: "hidden", display: "block" , backgroundColor: backgroundColor, textAlign: 'left', padding: '2rem', borderRadius: '15px'}}>
                 <h2 className={`descriptiveTextHeader ${headerSize}`}>{header}</h2>

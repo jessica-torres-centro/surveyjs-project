@@ -1,0 +1,33 @@
+/* This will make the background the chosen color */
+[class*="custom-color-"] {
+    color: white; 
+    background-color: white; /* test color */
+  }
+  
+  /* Example if the chosen color was #ff0000 (red) */
+  .custom-color-ff0000 {
+    background-color: blue !important;
+  }
+  
+  #sq_611{
+    padding: 1.5rem;
+  }
+  [data-key="question20"] {
+    /* Your styles here */
+    padding: 10px;
+    border-radius: 15px;
+    color: white;
+    border: 1px solid #ccc; /* Add a border */
+    padding: 20px;
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.2); 
+    background-color: white;
+    text-align: left;
+  }
+
+  [data-key="question20"] input{
+    background-color: #D8EEF8;
+  }
+
+  [data-key="question20"] .sd-input.sd-dropdown.sd-dropdown--empty{
+    background-color: #D8EEF8;
+  }
