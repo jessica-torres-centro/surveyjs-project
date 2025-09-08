@@ -7,6 +7,7 @@ import {Model} from 'survey-core';
 import {Survey} from 'survey-react-ui'
 
 import CustomTheme from "./CustomTheme";
+import { useCallback } from 'react';
 import "./customquestions/DescriptiveTextQuestion";
 
 //need to import JSON saved in localstorage
@@ -35,7 +36,15 @@ const defaultJson = {
     // Set the current locale for the survey
     survey.locale = locale;
 
-    
+    // Save results to localStorage when survey is completed
+    const handleSurveyComplete = useCallback((survey: Model) => {
+    const results = survey.data;
+    // Save under a separate key so we don’t overwrite survey-json
+    window.localStorage.setItem("survey-results", JSON.stringify(results));
+    alert("Results saved to localStorage:\n" + JSON.stringify(results, null, 2));
+  }, []);
+
+  survey.onComplete.add(handleSurveyComplete);
   
     return <Survey model={survey} />;
   }
