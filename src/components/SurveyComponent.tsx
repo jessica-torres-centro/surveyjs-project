@@ -22,6 +22,24 @@ const defaultJson = {
     }]
   }
 
+  export default function SurveyComponent({ locale = "en" }: { locale?: string }) {
+    const savedJson = window.localStorage.getItem("survey-json");
+    const surveyJson = savedJson ? JSON.parse(savedJson) : {
+      ...defaultJson,
+      locale: "en",
+    };
+  
+    const survey = new Model(surveyJson);
+    survey.applyTheme(CustomTheme);
+  
+    // Set the current locale for the survey
+    survey.locale = locale;
+
+    
+  
+    return <Survey model={survey} />;
+  }
+/*
 export default function SurveyComponent(){
     //grabbing content saved to localstorage and saving it, else display default JSON data
     const contentToRender = window.localStorage.getItem("survey-json") || JSON.stringify(defaultJson);
@@ -29,5 +47,7 @@ export default function SurveyComponent(){
     const survey = new Model(contentToRender);
     //add theme to survey
     survey.applyTheme(CustomTheme);
+    survey.locale = "en";
     return <Survey model={survey}/>;
 }
+*/
